@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "arsfiqball/laravel-todolist",
+    "description": "Todolist App built with Laravel Framework for tutorial purpose.",
+    "keywords": ["web", "app", "laravel"],
     "license": "MIT",
     "type": "project",
     "require": {
