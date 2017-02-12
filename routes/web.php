@@ -28,3 +28,25 @@ Route::get('/auth/facebook/callback', [
     'uses' => 'Auth\SocialController@handleFacebookCallback',
     'as' => 'auth.facebook.callback'
 ]);
+
+/*
+|--------------------------------------------------------------------------
+| Todolist Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/todo', [
+    'uses' => 'Todo\TodolistController@index',
+    'as' => 'todo'
+]);
+Route::post('/todo', [
+    'uses' => 'Todo\TodolistController@store',
+    'as' => 'todo.store'
+]);
+Route::any('/todo/{id}/update', [
+    'uses' => 'Todo\TodolistController@update',
+    'as' => 'todo.update'
+]);
+Route::get('/todo/{id}/delete', [
+    'uses' => 'Todo\TodolistController@delete',
+    'as' => 'todo.delete'
+]);
