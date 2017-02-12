@@ -9,6 +9,7 @@
 
                 <div class="panel-body">
                     You are logged in!
+                    Now you can add new task in <a href="{!! route('todo') !!}">Todolist</a>!
                 </div>
             </div>
         </div>

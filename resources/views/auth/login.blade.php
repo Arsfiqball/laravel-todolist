@@ -59,6 +59,13 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="col-md-8 col-md-offset-4">
+                                <a class="btn btn-default" href="{{ route('auth.facebook') }}">
+                                    Login with Facebook
+                                </a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
