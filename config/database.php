@@ -66,6 +66,17 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'heroku' => [  
+            'driver'   => 'pgsql',
+            'host'     => env('DATABASE_URL')? parse_url(env("DATABASE_URL"))["host"] : "",
+            'database' => env('DATABASE_URL')? substr(parse_url(env("DATABASE_URL"))["path"], 1) : "",
+            'username' => env('DATABASE_URL')? parse_url(env("DATABASE_URL"))["user"] : "",
+            'password' => env('DATABASE_URL')? parse_url(env("DATABASE_URL"))["pass"] : "",
+            'charset'  => 'utf8',
+            'prefix'   => '',
+            'schema'   => 'public',
+        ],
+
     ],
 
     /*
