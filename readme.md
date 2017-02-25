@@ -2,6 +2,8 @@
 
 Simple Easy Todolist App built on top of Laravel Framework with ability to authenticate using facebook. This repo can be used as a project of laravel tutorial and help you get started with awesome coding style in touch. It's free to copy/clone, hack it, explore it...
 
+See the demo: [http://arsfiqball-laravel-todolist.herokuapp.com/todo](http://arsfiqball-laravel-todolist.herokuapp.com/todo)
+
 ## Installation
 1. Copy or clone this repository
 2. Install dependencies by running ``composer install`` and ``npm install``.
