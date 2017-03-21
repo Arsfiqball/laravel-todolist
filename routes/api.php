@@ -16,3 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+/*
+|--------------------------------------------------------------------------
+| TodolistAPI Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/todo', 'Todo\TodolistAPIController@index');
+Route::post('/todo', 'Todo\TodolistAPIController@store');
+Route::post('/todo/{id}/update', 'Todo\TodolistAPIController@update');
+Route::post('/todo/{id}/delete', 'Todo\TodolistAPIController@delete');
