@@ -11190,6 +11190,8 @@ module.exports = g;
  */
 
 __webpack_require__(31);
+
+// Static UI to support styling
 __webpack_require__(32);
 
 /**
@@ -11199,6 +11201,7 @@ __webpack_require__(32);
  */
 
 Vue.component('example', __webpack_require__(35));
+Vue.component('todo', __webpack_require__(50));
 
 var app = new Vue({
   el: '#app'
@@ -12136,7 +12139,8 @@ window.axios.defaults.headers.common = {
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {$(function () {
+/* WEBPACK VAR INJECTION */(function($) {// Register Bootstrap's tooltip
+$(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
@@ -40344,6 +40348,291 @@ module.exports = function(module) {
 __webpack_require__(10);
 module.exports = __webpack_require__(11);
 
+
+/***/ }),
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+  data: function data() {
+    // dummy data
+    // todo
+    return {
+      showForm: true,
+      private: false,
+      title: '',
+      todos: [{
+        title: "No title",
+        finished: true,
+        privacy: 'public',
+        user: {
+          name: 'Iqbal'
+        }
+      }, {
+        title: "No title 2",
+        finished: true,
+        privacy: 'private',
+        user: {
+          name: 'Aditia'
+        }
+      }, {
+        title: "No title 3",
+        finished: false,
+        privacy: 'public',
+        user: {
+          name: 'Safnah'
+        }
+      }, {
+        title: "No title 4",
+        finished: false,
+        privacy: 'private',
+        user: {
+          name: 'Rafifa'
+        }
+      }]
+    };
+  },
+
+  methods: {
+    can: function can(modify, data) {
+      // todo
+      return true;
+    },
+    submit: function submit(event) {
+      // todo
+    },
+    remove: function remove(data) {
+      // todo
+    },
+    toggleFinished: function toggleFinished(data) {
+      // todo
+    },
+    togglePublic: function togglePublic(data) {
+      // todo
+    }
+  }
+};
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(36)(
+  /* script */
+  __webpack_require__(49),
+  /* template */
+  __webpack_require__(51),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/home/arsfiqball/Projects/todolist/resources/assets/js/components/Todo.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Todo.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-55dd7d7e", Component.options)
+  } else {
+    hotAPI.reload("data-v-55dd7d7e", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "panel panel-default"
+  }, [_vm._m(0), _vm._v(" "), _c('ul', {
+    staticClass: "list-group"
+  }, _vm._l((_vm.todos), function(todo) {
+    return _c('li', {
+      staticClass: "list-group-item"
+    }, [_c('div', [_c('h4', [_vm._v("\n          " + _vm._s(todo.title) + "\n        ")]), _vm._v(" "), _c('p', [_vm._v("\n          by " + _vm._s(todo.user.name) + "\n        ")])]), _vm._v(" "), _c('button', {
+      class: [_vm.can('update', todo) ? '' : 'disabled', 'btn', 'btn-default', 'btn-sm'],
+      attrs: {
+        "data-toggle": "tooltip",
+        "data-placement": "bottom",
+        "title": todo.finished ? 'Click to mark as not finished' : 'Click to mark as finished'
+      },
+      on: {
+        "click": function($event) {
+          _vm.toggleFinished(todo)
+        }
+      }
+    }, [_c('span', {
+      class: ['glyphicon', todo.finished ? 'glyphicon-ok' : 'glyphicon-time']
+    }), _vm._v(" " + _vm._s(todo.finished ? 'Finished' : 'Not finished') + "\n      ")]), _vm._v(" "), _c('button', {
+      class: [_vm.can('update', todo) ? '' : 'disabled', 'btn', 'btn-default', 'btn-sm'],
+      attrs: {
+        "data-toggle": "tooltip",
+        "data-placement": "bottom",
+        "title": todo.privacy == 'public' ? 'Click to make it private' : 'Click to make it public'
+      },
+      on: {
+        "click": function($event) {
+          _vm.togglePublic(todo)
+        }
+      }
+    }, [_c('span', {
+      class: ['glyphicon', todo.privacy == 'public' ? 'glyphicon-globe' : 'glyphicon-lock']
+    }), _vm._v(" " + _vm._s(todo.privacy == 'public' ? 'Finished' : 'Not finished') + "\n      ")]), _vm._v(" "), _c('button', {
+      class: [_vm.can('delete', todo) ? '' : 'disabled', 'btn', 'btn-danger', 'btn-sm'],
+      attrs: {
+        "data-toggle": "tooltip",
+        "data-placement": "bottom",
+        "title": "Click to delete this"
+      },
+      on: {
+        "click": function($event) {
+          _vm.remove(todo)
+        }
+      }
+    }, [_c('span', {
+      staticClass: "glyphicon glyphicon-trash"
+    }), _vm._v(" delete\n      ")])])
+  })), _vm._v(" "), (_vm.showForm) ? _c('div', {
+    staticClass: "panel-body"
+  }, [_c('form', {
+    attrs: {
+      "method": "post"
+    },
+    on: {
+      "submit": function($event) {
+        _vm.submit($event)
+      }
+    }
+  }, [_c('div', {
+    staticClass: "input-group"
+  }, [_c('span', {
+    staticClass: "input-group-addon"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.private),
+      expression: "private"
+    }],
+    attrs: {
+      "type": "checkbox"
+    },
+    domProps: {
+      "checked": Array.isArray(_vm.private) ? _vm._i(_vm.private, null) > -1 : (_vm.private)
+    },
+    on: {
+      "click": function($event) {
+        var $$a = _vm.private,
+          $$el = $event.target,
+          $$c = $$el.checked ? (true) : (false);
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$c) {
+            $$i < 0 && (_vm.private = $$a.concat($$v))
+          } else {
+            $$i > -1 && (_vm.private = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+          }
+        } else {
+          _vm.private = $$c
+        }
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "glyphicon glyphicon-lock"
+  }), _vm._v(" Private\n        ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.title),
+      expression: "title"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": "Add new task..."
+    },
+    domProps: {
+      "value": _vm._s(_vm.title)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.title = $event.target.value
+      }
+    }
+  })])])]) : _vm._e()])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "panel-heading"
+  }, [_c('h5', [_vm._v("Things to do:")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-55dd7d7e", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
