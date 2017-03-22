@@ -12216,9 +12216,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     can: function can(modify, data) {
-      // todo
       if (this.auth) {
-        return true;
+        switch (modify) {
+          case 'update':
+            if (this.auth.id == data.user.id) {
+              return true;
+            }
+            break;
+          case 'delete':
+            if (this.auth.id == data.user.id) {
+              return true;
+            }
+            break;
+        }
       }
 
       return false;
@@ -12237,6 +12247,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   mounted: function mounted() {
+    $('[data-toggle="tooltip"]').tooltip();
+  },
+  updated: function updated() {
     $('[data-toggle="tooltip"]').tooltip();
   }
 };
@@ -31925,8 +31938,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "disabled btn btn-default btn-sm"
     }, [_c('span', {
       class: ['glyphicon', todo.privacy == 'public' ? 'glyphicon-globe' : 'glyphicon-lock']
-    }), _vm._v(" " + _vm._s(todo.privacy == 'public' ? 'Finished' : 'Not finished') + "\n        ")])], _vm._v(" "), (_vm.auth) ? [_c('button', {
-      class: [_vm.can('delete', todo) ? '' : 'disabled', 'btn', 'btn-danger', 'btn-sm'],
+    }), _vm._v(" " + _vm._s(todo.privacy == 'public' ? 'Finished' : 'Not finished') + "\n        ")])], _vm._v(" "), (_vm.can('delete', todo)) ? [_c('button', {
+      class: ['btn', 'btn-danger', 'btn-sm'],
       attrs: {
         "data-toggle": "tooltip",
         "data-placement": "bottom",

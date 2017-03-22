@@ -28,8 +28,8 @@
             <span :class="['glyphicon', todo.privacy == 'public' ? 'glyphicon-globe' : 'glyphicon-lock']"></span> {{ todo.privacy == 'public' ? 'Finished' : 'Not finished' }}
           </button>
         </template>
-        <template v-if="auth">
-          <button v-on:click="remove(todo)" :class="[can('delete', todo) ? '' : 'disabled', 'btn', 'btn-danger', 'btn-sm']" data-toggle="tooltip" data-placement="bottom" title="Click to delete this">
+        <template v-if="can('delete', todo)">
+          <button v-on:click="remove(todo)" :class="['btn', 'btn-danger', 'btn-sm']" data-toggle="tooltip" data-placement="bottom" title="Click to delete this">
             <span class="glyphicon glyphicon-trash"></span> delete
           </button>
         </template>
@@ -73,9 +73,19 @@
     },
     methods: {
       can(modify, data) {
-        // todo
         if (this.auth) {
-          return true;
+          switch (modify) {
+            case 'update':
+              if (this.auth.id == data.user.id) {
+                return true;
+              }
+            break;
+            case 'delete':
+              if (this.auth.id == data.user.id) {
+                return true;
+              }
+            break;
+          }
         }
 
         return false;
@@ -94,6 +104,9 @@
       }
     },
     mounted() {
+      $('[data-toggle="tooltip"]').tooltip();
+    },
+    updated() {
       $('[data-toggle="tooltip"]').tooltip();
     }
   }
