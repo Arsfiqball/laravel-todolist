@@ -12180,51 +12180,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
+  props: ['auth'],
   data: function data() {
-    // dummy data
-    // todo
-    return {
+    var data = {
       showForm: true,
       private: false,
       title: '',
-      todos: [{
-        title: "No title",
-        finished: true,
-        privacy: 'public',
-        user: {
-          name: 'Iqbal'
-        }
-      }, {
-        title: "No title 2",
-        finished: true,
-        privacy: 'private',
-        user: {
-          name: 'Aditia'
-        }
-      }, {
-        title: "No title 3",
-        finished: false,
-        privacy: 'public',
-        user: {
-          name: 'Safnah'
-        }
-      }, {
-        title: "No title 4",
-        finished: false,
-        privacy: 'private',
-        user: {
-          name: 'Rafifa'
-        }
-      }]
+      todos: []
     };
+
+    axios.get('/api/todo').then(function (res) {
+      if (res.data && res.data.todos) {
+        data.todos = res.data.todos;
+      }
+    }).catch(function (err) {
+      console.log(err);
+    });
+
+    return data;
   },
 
   methods: {
     can: function can(modify, data) {
       // todo
-      return true;
+      if (this.auth) {
+        return true;
+      }
+
+      return false;
     },
     submit: function submit(event) {
       // todo
@@ -31888,8 +31885,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.todos), function(todo) {
     return _c('li', {
       staticClass: "list-group-item"
-    }, [_c('div', [_c('h4', [_vm._v("\n          " + _vm._s(todo.title) + "\n        ")]), _vm._v(" "), _c('p', [_vm._v("\n          by " + _vm._s(todo.user.name) + "\n        ")])]), _vm._v(" "), _c('button', {
-      class: [_vm.can('update', todo) ? '' : 'disabled', 'btn', 'btn-default', 'btn-sm'],
+    }, [_c('div', [_c('h4', [_vm._v("\n          " + _vm._s(todo.title) + "\n        ")]), _vm._v(" "), _c('p', [_vm._v("\n          by " + _vm._s(todo.user.name) + "\n        ")])]), _vm._v(" "), (_vm.can('update', todo)) ? [_c('button', {
+      staticClass: "btn btn-default btn-sm",
       attrs: {
         "data-toggle": "tooltip",
         "data-placement": "bottom",
@@ -31902,8 +31899,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('span', {
       class: ['glyphicon', todo.finished ? 'glyphicon-ok' : 'glyphicon-time']
-    }), _vm._v(" " + _vm._s(todo.finished ? 'Finished' : 'Not finished') + "\n      ")]), _vm._v(" "), _c('button', {
-      class: [_vm.can('update', todo) ? '' : 'disabled', 'btn', 'btn-default', 'btn-sm'],
+    }), _vm._v(" " + _vm._s(todo.finished ? 'Finished' : 'Not finished') + "\n        ")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-default btn-sm",
       attrs: {
         "data-toggle": "tooltip",
         "data-placement": "bottom",
@@ -31916,7 +31913,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('span', {
       class: ['glyphicon', todo.privacy == 'public' ? 'glyphicon-globe' : 'glyphicon-lock']
-    }), _vm._v(" " + _vm._s(todo.privacy == 'public' ? 'Finished' : 'Not finished') + "\n      ")]), _vm._v(" "), _c('button', {
+    }), _vm._v(" " + _vm._s(todo.privacy == 'public' ? 'Finished' : 'Not finished') + "\n        ")])] : [_c('button', {
+      staticClass: "disabled btn btn-default btn-sm"
+    }, [_c('span', {
+      class: ['glyphicon', todo.finished ? 'glyphicon-ok' : 'glyphicon-time']
+    }), _vm._v(" " + _vm._s(todo.finished ? 'Finished' : 'Not finished') + "\n        ")]), _vm._v(" "), _c('button', {
+      staticClass: "disabled btn btn-default btn-sm"
+    }, [_c('span', {
+      class: ['glyphicon', todo.privacy == 'public' ? 'glyphicon-globe' : 'glyphicon-lock']
+    }), _vm._v(" " + _vm._s(todo.privacy == 'public' ? 'Finished' : 'Not finished') + "\n        ")])], _vm._v(" "), (_vm.auth) ? [_c('button', {
       class: [_vm.can('delete', todo) ? '' : 'disabled', 'btn', 'btn-danger', 'btn-sm'],
       attrs: {
         "data-toggle": "tooltip",
@@ -31930,7 +31935,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('span', {
       staticClass: "glyphicon glyphicon-trash"
-    }), _vm._v(" delete\n      ")])])
+    }), _vm._v(" delete\n        ")])] : _vm._e()], 2)
   })), _vm._v(" "), (_vm.showForm) ? _c('div', {
     staticClass: "panel-body"
   }, [_c('form', {
