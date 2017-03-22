@@ -23,6 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 |--------------------------------------------------------------------------
 */
 Route::get('/todo', 'Todo\TodolistAPIController@index');
+Route::get('/todo/private', 'Todo\TodolistAPIController@privateIndex');
 Route::post('/todo', 'Todo\TodolistAPIController@store');
 Route::post('/todo/{id}/update', 'Todo\TodolistAPIController@update');
 Route::post('/todo/{id}/delete', 'Todo\TodolistAPIController@delete');

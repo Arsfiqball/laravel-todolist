@@ -12195,17 +12195,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = {
   props: ['auth'],
+
   data: function data() {
     var data = {
-      showForm: true,
+      showForm: this.auth ? true : false,
       private: false,
       title: '',
       todos: []
     };
 
-    axios.get('/api/todo').then(function (res) {
-      if (res.data && res.data.todos) {
-        data.todos = res.data.todos;
+    axios.get(this.auth ? '/api/todo/private' : '/api/todo').then(function (res) {
+      if (res.data) {
+        data.todos = res.data;
       }
     }).catch(function (err) {
       console.log(err);
@@ -12213,6 +12214,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     return data;
   },
+
 
   methods: {
     can: function can(modify, data) {
@@ -12234,18 +12236,62 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return false;
     },
     submit: function submit(event) {
-      // todo
+      var model = this;
+
+      axios.post('/api/todo', {
+        private: this.private,
+        title: this.title
+      }).then(function (res) {
+        if (res.data) {
+          model.todos.push(res.data);
+          model.private = null;
+          model.title = '';
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
     },
-    remove: function remove(data) {
-      // todo
+    remove: function remove(index, data) {
+      var model = this;
+
+      console.log('this is fired!');
+
+      axios.post('/api/todo/' + data.id + '/delete').then(function (res) {
+        if (res.data) {
+          model.todos.splice(index, 1);
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
     },
-    toggleFinished: function toggleFinished(data) {
-      // todo
+    toggleFinished: function toggleFinished(index, data) {
+      var model = this;
+
+      axios.post('/api/todo/' + data.id + '/update', {
+        finished: !data.finished
+      }).then(function (res) {
+        if (res.data) {
+          model.todos.splice(index, 1, res.data);
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
     },
-    togglePublic: function togglePublic(data) {
-      // todo
+    togglePublic: function togglePublic(index, data) {
+      var model = this;
+
+      axios.post('/api/todo/' + data.id + '/update', {
+        privacy: data.privacy == 'public' ? 'private' : 'public'
+      }).then(function (res) {
+        if (res.data) {
+          model.todos.splice(index, 1, res.data);
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
     }
   },
+
   mounted: function mounted() {
     $('[data-toggle="tooltip"]').tooltip();
   },
@@ -31911,7 +31957,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       on: {
         "click": function($event) {
-          _vm.toggleFinished(todo)
+          _vm.toggleFinished(_vm.todos.indexOf(todo), todo)
         }
       }
     }, [_c('span', {
@@ -31925,12 +31971,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       on: {
         "click": function($event) {
-          _vm.togglePublic(todo)
+          _vm.togglePublic(_vm.todos.indexOf(todo), todo)
         }
       }
     }, [_c('span', {
       class: ['glyphicon', todo.privacy == 'public' ? 'glyphicon-globe' : 'glyphicon-lock']
-    }), _vm._v(" " + _vm._s(todo.privacy == 'public' ? 'Finished' : 'Not finished') + "\n        ")])] : [_c('button', {
+    }), _vm._v(" " + _vm._s(todo.privacy == 'public' ? 'Public' : 'Private') + "\n        ")])] : [_c('button', {
       staticClass: "disabled btn btn-default btn-sm"
     }, [_c('span', {
       class: ['glyphicon', todo.finished ? 'glyphicon-ok' : 'glyphicon-time']
@@ -31938,7 +31984,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "disabled btn btn-default btn-sm"
     }, [_c('span', {
       class: ['glyphicon', todo.privacy == 'public' ? 'glyphicon-globe' : 'glyphicon-lock']
-    }), _vm._v(" " + _vm._s(todo.privacy == 'public' ? 'Finished' : 'Not finished') + "\n        ")])], _vm._v(" "), (_vm.can('delete', todo)) ? [_c('button', {
+    }), _vm._v(" " + _vm._s(todo.privacy == 'public' ? 'Public' : 'Private') + "\n        ")])], _vm._v(" "), (_vm.can('delete', todo)) ? [_c('button', {
       class: ['btn', 'btn-danger', 'btn-sm'],
       attrs: {
         "data-toggle": "tooltip",
@@ -31947,7 +31993,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       on: {
         "click": function($event) {
-          _vm.remove(todo)
+          _vm.remove(_vm.todos.indexOf(todo), todo)
         }
       }
     }, [_c('span', {
@@ -31961,6 +32007,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "submit": function($event) {
+        $event.preventDefault();
         _vm.submit($event)
       }
     }

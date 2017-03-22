@@ -25,10 +25,17 @@ class TodolistAPIController extends Controller
      */
     public function index(Request $request)
     {
-        return [
-            'todos' => Todo::list()->get(),
-            'user' => $request->user()
-        ];
+        return Todo::list()->get();
+    }
+
+    /**
+     * Show the todolist with also private.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function privateIndex(Request $request)
+    {
+        return Todo::list()->get();
     }
 
     /**

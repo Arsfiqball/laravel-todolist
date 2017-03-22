@@ -13,11 +13,11 @@
           </p>
         </div>
         <template v-if="can('update', todo)">
-          <button v-on:click="toggleFinished(todo)" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" :title="todo.finished ? 'Click to mark as not finished' : 'Click to mark as finished' ">
+          <button v-on:click="toggleFinished(todos.indexOf(todo), todo)" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" :title="todo.finished ? 'Click to mark as not finished' : 'Click to mark as finished' ">
             <span :class="['glyphicon', todo.finished ? 'glyphicon-ok' : 'glyphicon-time']"></span> {{ todo.finished ? 'Finished' : 'Not finished' }}
           </button>
-          <button v-on:click="togglePublic(todo)" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" :title="todo.privacy == 'public' ? 'Click to make it private' : 'Click to make it public' ">
-            <span :class="['glyphicon', todo.privacy == 'public' ? 'glyphicon-globe' : 'glyphicon-lock']"></span> {{ todo.privacy == 'public' ? 'Finished' : 'Not finished' }}
+          <button v-on:click="togglePublic(todos.indexOf(todo), todo)" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" :title="todo.privacy == 'public' ? 'Click to make it private' : 'Click to make it public' ">
+            <span :class="['glyphicon', todo.privacy == 'public' ? 'glyphicon-globe' : 'glyphicon-lock']"></span> {{ todo.privacy == 'public' ? 'Public' : 'Private' }}
           </button>
         </template>
         <template v-else>
@@ -25,18 +25,18 @@
             <span :class="['glyphicon', todo.finished ? 'glyphicon-ok' : 'glyphicon-time']"></span> {{ todo.finished ? 'Finished' : 'Not finished' }}
           </button>
           <button class="disabled btn btn-default btn-sm">
-            <span :class="['glyphicon', todo.privacy == 'public' ? 'glyphicon-globe' : 'glyphicon-lock']"></span> {{ todo.privacy == 'public' ? 'Finished' : 'Not finished' }}
+            <span :class="['glyphicon', todo.privacy == 'public' ? 'glyphicon-globe' : 'glyphicon-lock']"></span> {{ todo.privacy == 'public' ? 'Public' : 'Private' }}
           </button>
         </template>
         <template v-if="can('delete', todo)">
-          <button v-on:click="remove(todo)" :class="['btn', 'btn-danger', 'btn-sm']" data-toggle="tooltip" data-placement="bottom" title="Click to delete this">
+          <button v-on:click="remove(todos.indexOf(todo), todo)" :class="['btn', 'btn-danger', 'btn-sm']" data-toggle="tooltip" data-placement="bottom" title="Click to delete this">
             <span class="glyphicon glyphicon-trash"></span> delete
           </button>
         </template>
       </li>
     </ul>
     <div v-if="showForm" class="panel-body">
-      <form method="post" v-on:submit="submit($event)">
+      <form method="post" v-on:submit.prevent="submit($event)">
         <div class="input-group">
           <span class="input-group-addon">
             <input type="checkbox" v-model="private"> <span class="glyphicon glyphicon-lock"></span> Private
@@ -51,18 +51,19 @@
 <script>
   export default {
     props: ['auth'],
+
     data() {
       var data = {
-        showForm: true,
+        showForm: this.auth ? true : false,
         private: false,
         title: '',
         todos: []
       };
 
-      axios.get('/api/todo')
+      axios.get(this.auth ? '/api/todo/private' : '/api/todo')
         .then(function(res) {
-          if (res.data && res.data.todos) {
-            data.todos = res.data.todos;
+          if (res.data) {
+            data.todos = res.data;
           }
         })
         .catch(function(err) {
@@ -71,6 +72,7 @@
 
       return data;
     },
+
     methods: {
       can(modify, data) {
         if (this.auth) {
@@ -90,22 +92,73 @@
 
         return false;
       },
+
       submit(event) {
-        // todo
+        var model = this;
+
+        axios.post('/api/todo', {
+          private: this.private,
+          title: this.title
+        }).then(function(res) {
+          if (res.data) {
+            model.todos.push(res.data);
+            model.private = null;
+            model.title = '';
+          }
+        }).catch(function(err) {
+          console.log(err);
+        });
       },
-      remove(data) {
-        // todo
+
+      remove(index, data) {
+        var model = this;
+
+        console.log('this is fired!');
+
+        axios.post('/api/todo/'+data.id+'/delete')
+          .then(function(res) {
+            if (res.data) {
+              model.todos.splice(index, 1);
+            }
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
       },
-      toggleFinished(data) {
-        // todo
+
+      toggleFinished(index, data) {
+        var model = this;
+
+        axios.post('/api/todo/'+data.id+'/update', {
+          finished: (!data.finished)
+        }).then(function(res) {
+          if (res.data) {
+            model.todos.splice(index, 1, res.data);
+          }
+        }).catch(function(err) {
+          console.log(err);
+        });
       },
-      togglePublic(data) {
-        // todo
+
+      togglePublic(index, data) {
+        var model = this;
+
+        axios.post('/api/todo/'+data.id+'/update', {
+          privacy: data.privacy == 'public' ? 'private' : 'public'
+        }).then(function(res) {
+          if (res.data) {
+            model.todos.splice(index, 1, res.data);
+          }
+        }).catch(function(err) {
+          console.log(err);
+        });
       }
     },
+
     mounted() {
       $('[data-toggle="tooltip"]').tooltip();
     },
+
     updated() {
       $('[data-toggle="tooltip"]').tooltip();
     }
