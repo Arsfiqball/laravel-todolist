@@ -92,6 +92,9 @@
       togglePublic(data) {
         // todo
       }
+    },
+    mounted() {
+      $('[data-toggle="tooltip"]').tooltip();
     }
   }
 </script>
