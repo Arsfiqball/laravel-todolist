@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Iqbal Mohammad Abdul Ghoni
+# This file is distributed under the same license as the Laravel Todolist
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Laravel Todolist \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-08 08:15+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.4.0\n"
+
+#: ../../index.rst:7
+msgid "Welcome to Laravel Todolist's documentation!"
+msgstr ""
+
+#: ../../index.rst:14
+msgid ""
+"Simple Easy Todolist App built on top of Laravel Framework with ability "
+"to authenticate using facebook. This repo can be used as a project of "
+"laravel tutorial and help you get started with awesome coding style in "
+"touch. It's free to copy/clone, hack it, explore it..."
+msgstr ""
+"Aplikasi Todolist Mudah Sederhana yang dibuat dengan Framework Laravel "
+"dengan kemampuan untuk mengotentikasi menggunakan facebook. Repo ini "
+"Bisa digunakan sebagai project dari tutorial laravel dan membantu mu "
+"memulai dengan gaya mengkode keren di genggaman. Ini bebas untuk dicopy/"
+"clone, oprek, jelajahi ini..."
+
+#: ../../index.rst:21
+msgid "Indices and tables"
+msgstr ""
+
+#: ../../index.rst:23
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ../../index.rst:24
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ../../index.rst:25
+msgid ":ref:`search`"
+msgstr ""
+
