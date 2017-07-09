@@ -66,7 +66,7 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'heroku' => [  
+        'heroku' => [
             'driver'   => 'pgsql',
             'host'     => env('DATABASE_URL')? parse_url(env("DATABASE_URL"))["host"] : "",
             'database' => env('DATABASE_URL')? substr(parse_url(env("DATABASE_URL"))["path"], 1) : "",

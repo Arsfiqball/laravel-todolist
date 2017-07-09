@@ -1,0 +1,93 @@
+[PHP General]
+bears = PHPLintBear, LineLengthBear, SpaceConsistencyBear, LineCountBear
+files = **.php
+ignore = resources/views/**,
+         bootstrap/cache/**,
+         docs/**,
+         node_modules/**,
+         public/**,
+         storage/**,
+         vendor/**
+max_line_length = 120
+indent_size = 4
+use_spaces = True
+enforce_newline_at_EOF = True
+max_lines_per_file = 500
+
+[PHP Filenaming Convention: PascalCase]
+bears = FilenameBear
+files = app/**.php,
+        database/factories/**.php,
+        database/seeds/**.php,
+        tests/**.php
+file_naming_convention = pascal
+
+[PHP Filenaming Convention: snake_case]
+bears = FilenameBear
+files = config/**.php,
+        database/migrations/**.php,
+        routes/**.php
+file_naming_convention = snake
+
+[JavaScript]
+bears = JSHintBear, LineLengthBear, SpaceConsistencyBear, LineCountBear
+files = resources/assets/js/**.js,
+        webpack.mix.js
+max_line_length = 140
+indent_size = 2
+use_spaces = True
+enforce_newline_at_EOF = True
+max_lines_per_file = 500
+environment_jquery = True
+environment_browser = True
+environment_node = True
+es_version = 6
+max_depth = 6
+
+[SCSS]
+bears = SCSSLintBear, StyleLintBear, LineLengthBear, SpaceConsistencyBear, LineCountBear
+files = resources/assets/sass/**.scss
+max_line_length = 80
+indent_size = 2
+use_spaces = True
+enforce_newline_at_EOF = True
+max_lines_per_file = 800
+
+[XML]
+bears = XMLBear
+files = **.xml
+ignore = bootstrap/cache/**,
+         docs/**,
+         node_modules/**,
+         public/**,
+         storage/**,
+         vendor/**
+
+[JSON]
+bears = JSONFormatBear
+indent_size = 2
+
+[YML]
+bears = YAMLLintBear, LineLengthBear, SpaceConsistencyBear
+files = **.yml
+ignore = bootstrap/cache/**,
+         docs/**,
+         node_modules/**,
+         public/**,
+         storage/**,
+         vendor/**
+max_line_length = 140
+indent_size = 2
+use_spaces = True
+enforce_newline_at_EOF = True
+
+[Markdown]
+bears = LineLengthBear
+files = **.md
+ignore = bootstrap/cache/**,
+         docs/**,
+         node_modules/**,
+         public/**,
+         storage/**,
+         vendor/**
+max_line_length = 80
