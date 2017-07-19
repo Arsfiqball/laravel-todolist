@@ -1,3 +1,4 @@
+const Vue = require('vue');
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -22,3 +23,5 @@ Vue.component('todo', require('./components/Todo.vue'));
 const app = new Vue({
     el: '#app'
 });
+
+module.exports = app;
